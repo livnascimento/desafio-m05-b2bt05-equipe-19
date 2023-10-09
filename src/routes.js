@@ -20,4 +20,4 @@ routes.get("/categorias", categories.list);
 routes.get("/usuario", users.detailProfile);
 //routes.put("/usuario", verify(schemaUsuario), users.update);
 
-routes.module.exports = routes;
+module.exports = routes;
