@@ -12,3 +12,7 @@
 - jsonwebtoken
 - knex
 - pg
+
+### Importante:
+
+Quem já fez pull no projeto, por favor, mudem a variável 'SENHA_HASH' para 'HASH_PASS' no `.env` (não no `.env.exemplo`).
