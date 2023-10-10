@@ -1,5 +1,5 @@
 const express = require("express");
-const categories = require("./controllers/categories");
+const { listCategories } = require("./controllers/categories");
 const users = require("./controllers/users");
 const { verify } = require("jsonwebtoken");
 const login = require("./controllers/login");
@@ -8,7 +8,7 @@ const { schemaUsuario, schemaLogin } = require("./utils/schemas");
 const routes = express();
 
 //***all access routes***
-routes.get("/categorias", categories.list);
+routes.get("/categorias", listCategories);
 
 //routes.post("/usuario", verify(schemaUsuario), users.create);
 
