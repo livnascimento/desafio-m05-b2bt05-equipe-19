@@ -1,5 +1,11 @@
 ## Não esquecam de dar npm install antes de comecar a trabalhar
 
+## Se vc for usar um banco postgre local, para criar as tabelas e preencher automatizado, rodar:
+
+```
+npm run migrations
+```
+
 ## n esqueça de copiar o arquivo .env.exemplo - renomear para .env e preencher as variaveis com seus dados
 
 ## tecnologias instaladas
