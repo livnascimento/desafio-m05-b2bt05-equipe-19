@@ -11,7 +11,7 @@ const createUser = async (req, res) => {
 
         const user = await knex('usuarios').insert({nome, email, senha: encryptedPassword}).returning(["nome", "email"]);
 
-        return res.status(201).json(user);
+        return res.status(201).json(user[0]);
     } catch (error) {
         return res.status(500).json({message: "Erro interno do servidor."});
     }
