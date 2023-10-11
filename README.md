@@ -1,6 +1,6 @@
 # QuickSale - Projeto Interdisciplinar de Conclusão de Curso
 
-![Static Badge](https://img.shields.io/badge/status-em%20andamento-blue)
+![Static Badge](https://img.shields.io/badge/status-em%20desenvolvimento-blue)
 
 
 ## Descrição do Projeto
