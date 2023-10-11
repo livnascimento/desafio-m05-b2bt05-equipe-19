@@ -19,6 +19,6 @@ const createUser = async (req, res) => {
 
 const detailProfile = (req, res) => { };
 
-const update = (req, res) => { };
+const updateUser = (req, res) => { };
 
-module.exports = { createUser, detailProfile, update };
+module.exports = { createUser, detailProfile, updateUser };

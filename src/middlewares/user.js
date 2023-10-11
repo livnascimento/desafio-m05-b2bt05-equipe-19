@@ -10,6 +10,11 @@ const verifyEmail = (requestType) => async (req, res, next) => {
             const emailExists = user ? true : false;
             if (emailExists) return res.status(400).json({ message: "Esse e-mail já está cadastrado" });
 
+        } else if (requestType == "login") {
+
+            const emailExists = user ? true : false;
+            if (!emailExists) return res.status(404).json({ message: "Credenciais inválidas" });
+
         } else {
 
             const { id } = req.usuario;

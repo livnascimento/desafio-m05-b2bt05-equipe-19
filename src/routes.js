@@ -1,6 +1,6 @@
 const express = require("express");
 const { listCategories } = require("./controllers/categories");
-const {createUser, detailProfile} = require("./controllers/users");
+const { createUser, detailProfile } = require("./controllers/users");
 const verifyBodyRequest = require("./middlewares/verify");
 const login = require("./controllers/login");
 const { schemaUsuario, schemaLogin } = require("./utils/schemas");
@@ -15,7 +15,7 @@ routes.post("/usuario", verifyBodyRequest(schemaUsuario), verifyEmail("cadastro"
 
 //****authentication route*******
 
-//routes.post("/login", verifyBodyRequest(schemaLogin), login);
+routes.post("/login", verifyBodyRequest(schemaLogin), verifyEmail("login"), login);
 
 //***routes that require login***
 routes.get("/usuario", detailProfile);
