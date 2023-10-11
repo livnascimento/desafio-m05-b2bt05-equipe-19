@@ -1,5 +1,3 @@
-//usado para o JOI verificar os dados que foram mandados no request
-
 const verifyBodyRequest = (joiSchema) => async (req, res, next) => {
   try {
     await joiSchema.validateAsync(req.body);

@@ -11,11 +11,21 @@ const routes = express();
 //***all access routes***
 routes.get("/categorias", listCategories);
 
-routes.post("/usuario", verifyBodyRequest(schemaUsuario), verifyEmail("cadastro"), createUser);
+routes.post(
+  "/usuario",
+  verifyBodyRequest(schemaUsuario),
+  verifyEmail("cadastro"),
+  createUser
+);
 
 //****authentication route*******
 
-routes.post("/login", verifyBodyRequest(schemaLogin), verifyEmail("login"), login);
+routes.post(
+  "/login",
+  verifyBodyRequest(schemaLogin),
+  verifyEmail("login"),
+  login
+);
 
 //***routes that require login***
 routes.get("/usuario", detailProfile);

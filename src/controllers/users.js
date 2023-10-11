@@ -1,24 +1,25 @@
-const knex = require('../db/db');
-const bcrypt = require('bcrypt');
-require('dotenv/config');
+const knex = require("../db/db-knex");
+const bcrypt = require("bcrypt");
+require("dotenv/config");
 
 const createUser = async (req, res) => {
+  const { nome, email, senha } = req.body;
 
-    const { nome, email, senha } = req.body;
+  try {
+    const encryptedPassword = await bcrypt.hash(senha, 10);
 
-    try {
-        const encryptedPassword = await bcrypt.hash(senha, 10);
+    const user = await knex("usuarios")
+      .insert({ nome, email, senha: encryptedPassword })
+      .returning(["nome", "email"]);
 
-        const user = await knex('usuarios').insert({nome, email, senha: encryptedPassword}).returning(["nome", "email"]);
-
-        return res.status(201).json(user[0]);
-    } catch (error) {
-        return res.status(500).json({message: "Erro interno do servidor."});
-    }
+    return res.status(201).json(user[0]);
+  } catch (error) {
+    return res.status(500).json({ message: "Erro interno do servidor." });
+  }
 };
 
-const detailProfile = (req, res) => { };
+const detailProfile = (req, res) => {};
 
-const updateUser = (req, res) => { };
+const updateUser = (req, res) => {};
 
 module.exports = { createUser, detailProfile, updateUser };
