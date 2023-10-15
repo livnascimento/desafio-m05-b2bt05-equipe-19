@@ -9,7 +9,7 @@ const login = async (req, res) => {
   try {
     const user = await knex("usuarios").where({ email }).first();
 
-    const isPasswordValid = await bcrypt.compare(senha, user.senha);
+    const isPasswordValid = await bcrypt.compare(senha, user.senha); //user.rows[0].senha
 
     if (!isPasswordValid)
       return res.status(400).json({ message: "Credenciais inválidas." });

@@ -18,8 +18,19 @@ const createUser = async (req, res) => {
   }
 };
 
-const detailProfile = (req, res) => {};
+const detailProfile = async (req, res) => {
 
-const updateUser = (req, res) => {};
+  try {
+
+
+    return res.status(201).json(user[0]);
+  } catch (error) {
+    return res.status(500).json({ message: "Erro interno do servidor." });
+  }
+};
+
+const updateUser = (req, res) => {
+
+};
 
 module.exports = { createUser, detailProfile, updateUser };
