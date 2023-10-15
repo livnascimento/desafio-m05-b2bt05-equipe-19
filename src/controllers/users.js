@@ -19,11 +19,19 @@ const createUser = async (req, res) => {
 };
 
 const detailProfile = async (req, res) => {
+  const { id } = req.user;
 
   try {
+    const { rows, rowCount } = await Pool.query(
+      'select id, nome, email from usuarios where id = $1',
+      [id]
+    )
 
+    if (rowCount < 1) {
+      return res.status(401).json({ mensagem: 'Usuario não encontrado' });
+    }
 
-    return res.status(201).json(user[0]);
+    return res.status(200).json(rows[0]);
   } catch (error) {
     return res.status(500).json({ message: "Erro interno do servidor." });
   }
