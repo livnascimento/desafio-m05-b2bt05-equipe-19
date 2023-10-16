@@ -1,6 +1,5 @@
 const knex = require("../db/db-knex");
 const bcrypt = require("bcrypt");
-const verifyEmail = require("../middlewares/user");
 require("dotenv/config");
 
 const createUser = async (req, res) => {
