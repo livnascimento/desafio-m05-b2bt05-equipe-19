@@ -24,13 +24,13 @@ const detailProfile = async (req, res) => {
   const { id } = req.user;
 
   try {
-    const user = await knex('usuarios').where({id}).first();
+    const user = await knex('usuarios').where({ id }).first();
 
     if (!user) {
       return res.status(401).json({ mensagem: 'Usuario não encontrado' });
     }
 
-    const {senha: _, ...userDetails} = user;
+    const { senha: _, ...userDetails } = user;
 
     return res.json(userDetails);
   } catch (error) {
@@ -44,17 +44,10 @@ const updateUser = async (req, res) => {
 
   try {
     const encryptedPassword = await bcrypt.hash(senha, 10);
-    const { rows, rowCount } = await pool.query(
-      'select * from usuarios where id = $1',
-      [id]
-    )
+    const user = await knex('usuarios').where({ id }).update({ nome, email, senha: encryptedPassword }, '*');
+    // pool.query('update usuarios set nome = $1, email = $2, senha = $3 where ud = $4', [nome, email, encryptedPassword, id]);
 
-    if (rowCount > 1) {
-      return res.status(404).json({ mensagem: 'Usuário não encontrado' });
-    }
-
-    await pool.query('update usuarios set nome = $1, email = $2, senha = $3 where ud = $4', [nome, email, encryptedPassword, id]);
-    return res.status(204).send()
+    return res.status(204).send();
   } catch (error) {
     console.log(error);
     return res.status(500).json('Erro interno do servidor');
