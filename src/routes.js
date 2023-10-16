@@ -29,7 +29,7 @@ routes.post(
 );
 
 //***routes that require login***
-routes.use(authenticate);
+routes.use(authentication);
 
 routes.get("/usuario", detailProfile);
 //routes.put("/usuario", verifyBodyRequest(schemaUsuario), users.update);

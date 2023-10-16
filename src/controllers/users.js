@@ -2,7 +2,6 @@
 const knex = require("../db/db-knex");
 const bcrypt = require("bcrypt");
 const verifyEmail = require("../middlewares/user");
-const verifyEmail = require("../middlewares/user");
 require("dotenv/config");
 
 const createUser = async (req, res) => {
@@ -25,18 +24,17 @@ const detailProfile = async (req, res) => {
   const { id } = req.user;
 
   try {
-    const { rows, rowCount } = await Pool.query(
-      'select id, nome, email from usuarios where id = $1',
-      [id]
-    )
+    const user = await knex('usuarios').where({id}).first();
 
-    if (rowCount < 1) {
+    if (!user) {
       return res.status(401).json({ mensagem: 'Usuario não encontrado' });
     }
 
-    return res.status(200).json(rows[0]);
+    const {senha: _, ...userDetails} = user;
+
+    return res.json(userDetails);
   } catch (error) {
-    return res.status(500).json({ message: "Erro interno do servidor." });
+    return res.status(500).json({ message: error.message });
   }
 };
 

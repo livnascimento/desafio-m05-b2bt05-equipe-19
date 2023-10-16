@@ -1,25 +1,26 @@
 const jwt = require('jsonwebtoken');
-const senhaJwt = require('../senhaJwt');
+const knex = require('../db/db-knex');
+require('dotenv/config');
 
 const authentication = async (req, res, next) => {
     const { authorization } = req.headers;
-
+    
     if (!authorization) {
         return res.status(401).json({ mensagem: "Não autorizado" });
     }
-
+    
     const token = authorization.split(' ')[1];
-
+    
     try {
-        const { id } = jwt.verify(token, senhaJwt);
+        const { id } = jwt.verify(token, process.env.HASH_PASS);
+        
+        const user = await knex('usuarios').where({id}).first();
 
-        const { rows, rowCount } = await pool.query('select * from usuarios where id = $1', [id]);
-
-        if (rowCount < 1) {
+        if (!user) {
             return res.status(401).json({ mensagem: 'Não autorizado' })
         }
 
-        req.user = rows[0];
+        req.user = user;
 
         next();
     } catch (error) {
