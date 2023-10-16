@@ -1,4 +1,3 @@
-
 const knex = require("../db/db-knex");
 const bcrypt = require("bcrypt");
 const verifyEmail = require("../middlewares/user");
@@ -45,15 +44,11 @@ const updateUser = async (req, res) => {
   try {
     const encryptedPassword = await bcrypt.hash(senha, 10);
     const user = await knex('usuarios').where({ id }).update({ nome, email, senha: encryptedPassword }, '*');
-    // pool.query('update usuarios set nome = $1, email = $2, senha = $3 where ud = $4', [nome, email, encryptedPassword, id]);
 
     return res.status(204).send();
   } catch (error) {
-    console.log(error);
     return res.status(500).json('Erro interno do servidor');
   }
 };
-
-
 
 module.exports = { createUser, detailProfile, updateUser };

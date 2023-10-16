@@ -5,7 +5,7 @@ const verifyEmail = (requestType) => async (req, res, next) => {
   try {
     const user = await knex("usuarios").where({ email }).first();
 
-    if (requestType == "cadastro") {
+    if (requestType == "create") {
       const emailExists = user ? true : false;
       if (emailExists)
         return res
@@ -16,12 +16,16 @@ const verifyEmail = (requestType) => async (req, res, next) => {
       if (!emailExists)
         return res.status(404).json({ message: "Credenciais inválidas" });
     } else {
-      const { id } = req.usuario;
-      const emailExists = user.id == id ? false : true;
-      if (emailExists)
-        return res
-          .status(400)
-          .json({ message: "Esse e-mail já está cadastrado" });
+      const { id } = req.user;
+      
+      if (user) {
+        const emailExists = user.id == id ? false : true;
+        if (emailExists ){
+          return res
+            .status(400)
+            .json({ message: "Esse e-mail já está cadastrado" });
+        }
+      }
     }
 
     next();

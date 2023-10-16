@@ -15,7 +15,7 @@ routes.get("/categorias", listCategories);
 routes.post(
   "/usuario",
   verifyBodyRequest(schemaUsuario),
-  verifyEmail("cadastro"),
+  verifyEmail("create"),
   createUser
 );
 
@@ -33,6 +33,10 @@ routes.use(authentication);
 
 routes.get("/usuario", detailProfile);
 //routes.put("/usuario", verifyBodyRequest(schemaUsuario), users.update);
-routes.put("/usuario", verifyBodyRequest(schemaUsuario), updateUser);
+routes.put(
+  "/usuario", 
+  verifyBodyRequest(schemaUsuario), 
+  verifyEmail("update"), 
+  updateUser);
 
 module.exports = routes;
