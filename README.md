@@ -39,5 +39,5 @@ Certifique-se de utilizar os endpoints mencionados acima de acordo com a descri�
 
 ## Desenvolvedoras
 - [Lívia Nascimento](https://github.com/livnascimento)
-- [Luiza Oliveira](https://github.com/LuhOli42)
+- [Luiza Ferreira](https://github.com/LuhOli42)
 - [Vitória Blau](https://github.com/viviblau)
