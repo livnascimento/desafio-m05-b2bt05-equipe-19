@@ -25,7 +25,7 @@ const detailProfile = async (req, res) => {
     const user = await knex("usuarios").where({ id }).first();
 
     if (!user) {
-      return res.status(401).json({ mensagem: "Usuario não encontrado" });
+      return res.status(401).json({ message: "Usuario não encontrado" });
     }
 
     const { senha: _, ...userDetails } = user;
