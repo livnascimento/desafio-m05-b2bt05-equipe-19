@@ -13,17 +13,13 @@ const authentication = require("./middlewares/authenticate");
 
 const routes = express();
 
-//***all access routes***
 routes.get("/categorias", listCategories);
-
 routes.post(
   "/usuario",
   verifyBodyRequest(schemaUsuario),
   verifyEmail("create"),
   createUser
 );
-
-//****authentication route*******
 
 routes.post(
   "/login",
@@ -32,7 +28,6 @@ routes.post(
   login
 );
 
-//***routes that require login***
 routes.use(authentication);
 
 routes.get("/usuario", detailProfile);
