@@ -1,11 +1,15 @@
 const express = require("express");
 const { listCategories } = require("./controllers/categories");
-const { createUser, detailProfile, updateUser } = require("./controllers/users");
-const verifyBodyRequest = require("./middlewares/verify");
+const {
+  createUser,
+  detailProfile,
+  updateUser,
+} = require("./controllers/users");
+const { verifyBodyRequest, verifyEmail } = require("./middlewares/verify");
 const login = require("./controllers/login");
 const { schemaUsuario, schemaLogin } = require("./utils/schemas");
-const verifyEmail = require("./middlewares/user");
-const authentication = require('./middlewares/authenticate');
+
+const authentication = require("./middlewares/authenticate");
 
 const routes = express();
 
@@ -32,11 +36,11 @@ routes.post(
 routes.use(authentication);
 
 routes.get("/usuario", detailProfile);
-//routes.put("/usuario", verifyBodyRequest(schemaUsuario), users.update);
 routes.put(
-  "/usuario", 
-  verifyBodyRequest(schemaUsuario), 
-  verifyEmail("update"), 
-  updateUser);
+  "/usuario",
+  verifyBodyRequest(schemaUsuario),
+  verifyEmail("update"),
+  updateUser
+);
 
 module.exports = routes;

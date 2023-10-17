@@ -1,0 +1,45 @@
+@url = http://localhost:3000
+
+###
+GET {{url}}/categorias
+
+###
+POST {{url}}/usuario
+Content-Type: application/json
+
+{
+    "nome":"Luiza",
+    "email":"luh@teste.com",
+    "senha":"12345"
+}
+
+###
+# @name createProject
+POST {{url}}/login
+Content-Type: application/json
+
+{
+    "email":"luh@teste.com",
+    "senha":"12345"
+}
+
+###
+@token = {{createProject.response.body.token}}
+
+###
+@id = {{createProject.response.body.authenticatedUser.id}}
+
+###
+GET {{url}}/usuario
+Authorization: Bearer {{token}}
+
+###
+PUT {{url}}/usuario
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "nome":"Luiza Ferreira",
+    "email":"luh@teste.com",
+    "senha": "12345"
+}
