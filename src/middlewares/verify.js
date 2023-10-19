@@ -54,6 +54,7 @@ const verifyCategoryExist = async (req, res, next) => {
     if (!categoryExist) {
       return res.status(400).json({ message: "Essa categoria não existe" });
     }
+    req.categoria_id_nome = categoryExist.descricao;
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }

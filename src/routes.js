@@ -11,7 +11,12 @@ const {
   verifyCategoryExist,
 } = require("./middlewares/verify");
 const login = require("./controllers/login");
-const { schemaUser, schemaLogin, schemaProduct } = require("./utils/schemas");
+const {
+  schemaUser,
+  schemaLogin,
+  schemaProduct,
+  schemaClient,
+} = require("./utils/schemas");
 
 const authentication = require("./middlewares/authenticate");
 const {
