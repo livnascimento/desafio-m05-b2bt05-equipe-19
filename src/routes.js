@@ -5,18 +5,27 @@ const {
   detailProfile,
   updateUser,
 } = require("./controllers/users");
-const { verifyBodyRequest, verifyEmail } = require("./middlewares/verify");
+const {
+  verifyBodyRequest,
+  verifyEmail,
+  verifyCategoryExist,
+} = require("./middlewares/verify");
 const login = require("./controllers/login");
-const { schemaUsuario, schemaLogin } = require("./utils/schemas");
+const { schemaUser, schemaLogin, schemaProduct } = require("./utils/schemas");
 
 const authentication = require("./middlewares/authenticate");
+const {
+  createProduct,
+  listProducts,
+  updateProduct,
+} = require("./controllers/produto");
 
 const routes = express();
 
 routes.get("/categorias", listCategories);
 routes.post(
   "/usuario",
-  verifyBodyRequest(schemaUsuario),
+  verifyBodyRequest(schemaUser),
   verifyEmail("create"),
   createUser
 );
@@ -33,9 +42,23 @@ routes.use(authentication);
 routes.get("/usuario", detailProfile);
 routes.put(
   "/usuario",
-  verifyBodyRequest(schemaUsuario),
+  verifyBodyRequest(schemaUser),
   verifyEmail("update"),
   updateUser
+);
+
+routes.post(
+  "/produto",
+  verifyBodyRequest(schemaProduct),
+  verifyCategoryExist,
+  createProduct
+);
+routes.get("produto", listProducts);
+routes.put(
+  "/produto/:id",
+  verifyBodyRequest(schemaProduct),
+  verifyCategoryExist,
+  updateProduct
 );
 
 module.exports = routes;

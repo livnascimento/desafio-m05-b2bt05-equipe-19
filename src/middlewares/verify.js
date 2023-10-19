@@ -44,4 +44,20 @@ const verifyEmail = (requestType) => async (req, res, next) => {
   }
 };
 
-module.exports = { verifyBodyRequest, verifyEmail };
+const verifyCategoryExist = async (req, res, next) => {
+  const { categoria_id } = req.body;
+  try {
+    const categoryExist = await knex("categorias")
+      .where({ id: categoria_id })
+      .first();
+
+    if (!categoryExist) {
+      return res.status(400).json({ message: "Essa categoria não existe" });
+    }
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+  next();
+};
+
+module.exports = { verifyBodyRequest, verifyEmail, verifyCategoryExist };
