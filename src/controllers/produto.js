@@ -26,8 +26,10 @@ const createProduct = async (req, res) => {
 const listProducts = async (req, res) => {
   let { filtro } = req.query;
 
+  filtro = filtro.filter((fil) => fil !== "");
+
   try {
-    if (filtro) {
+    if (filtro && filtro.length > 0) {
       filtro = filtro.map((fil) => fil.trim().toLowerCase());
 
       let query = `LOWER(c.descricao)=? `;
@@ -49,6 +51,7 @@ const listProducts = async (req, res) => {
 
     return res.status(200).json(products);
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ message: "Erro interno do servidor." });
   }
 };
