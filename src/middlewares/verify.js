@@ -10,10 +10,10 @@ const verifyBodyRequest = (joiSchema) => async (req, res, next) => {
   next();
 };
 
-const verifyEmail = (requestType) => async (req, res, next) => {
+const verifyEmail = (requestType, userType) => async (req, res, next) => {
   const { email } = req.body;
   try {
-    const user = await knex("usuarios").where({ email }).first();
+    const user = await knex(userType).where({ email }).first();
 
     if (requestType == "create") {
       const emailExists = user ? true : false;
@@ -110,10 +110,28 @@ const verifyByIdAnyDataBase = (selectDataBase) => async (req, res, next) => {
   next();
 };
 
+const verifyCPF = async (req, res, next) => {
+  const { cpf } = req.body;
+  try {
+    const user = await knex("clientes").where({ cpf }).first();
+
+    const cpfExists = user ? true : false;
+    if (cpfExists)
+      return res
+        .status(400)
+        .json({ message: "Esse CPF já está cadastrado" });
+
+    next();
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+}
+
 module.exports = {
   verifyBodyRequest,
   verifyEmail,
   verifyCategoryExist,
   verifyProductDescription,
   verifyByIdAnyDataBase,
+  verifyCPF
 };

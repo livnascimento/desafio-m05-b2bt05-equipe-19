@@ -11,6 +11,7 @@ const {
   verifyCategoryExist,
   verifyByIdAnyDataBase,
   verifyProductDescription,
+  verifyCPF,
 } = require("./middlewares/verify");
 const login = require("./controllers/login");
 const {
@@ -28,6 +29,7 @@ const {
   detailProduct,
   deleteProduct,
 } = require("./controllers/produto");
+const { createClient } = require("./controllers/clients");
 
 const routes = express();
 
@@ -35,14 +37,14 @@ routes.get("/categorias", listCategories);
 routes.post(
   "/usuario",
   verifyBodyRequest(schemaUser),
-  verifyEmail("create"),
+  verifyEmail("create", "usuarios"),
   createUser
 );
 
 routes.post(
   "/login",
   verifyBodyRequest(schemaLogin),
-  verifyEmail("login"),
+  verifyEmail("login", "usuarios"),
   login
 );
 
@@ -52,7 +54,7 @@ routes.get("/usuario", detailProfile);
 routes.put(
   "/usuario",
   verifyBodyRequest(schemaUser),
-  verifyEmail("update"),
+  verifyEmail("update", "usuarios"),
   updateUser
 );
 
@@ -78,5 +80,13 @@ routes.delete(
   verifyByIdAnyDataBase("produtos"),
   deleteProduct
 );
+
+routes.post(
+  "/cliente",
+  verifyBodyRequest(schemaClient),
+  verifyEmail("create", "clientes"),
+  verifyCPF,
+  createClient
+)
 
 module.exports = routes;
