@@ -23,7 +23,36 @@ const createProduct = async (req, res) => {
   }
 };
 
-const listProducts = async (req, res) => {};
+const listProducts = async (req, res) => {
+  let { filtro } = req.query;
+
+  try {
+    if (filtro) {
+      filtro = filtro.map((fil) => fil.trim().toLowerCase());
+
+      let query = `LOWER(c.descricao)=? `;
+
+      for (let x = 1; x < filtro.length; x++) {
+        query += ` or LOWER(c.descricao)=?`;
+      }
+
+      const products = await knex("produtos")
+        .join("categorias as c", "produtos.categoria_id", "c.id")
+        .select("*", "c.descricao as categoria_descricao")
+        .whereRaw(query, filtro);
+      return res.status(200).json(products);
+    }
+
+    const products = await knex("produtos")
+      .join("categorias as c", "produtos.categoria_id", "c.id")
+      .select("*", "c.descricao as categoria_descricao");
+
+    return res.status(200).json(products);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Erro interno do servidor." });
+  }
+};
 
 const updateProduct = async (req, res) => {};
 

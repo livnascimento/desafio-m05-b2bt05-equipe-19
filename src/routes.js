@@ -58,7 +58,7 @@ routes.post(
   verifyCategoryExist,
   createProduct
 );
-routes.get("produto", listProducts);
+routes.get("/produto", listProducts);
 routes.put(
   "/produto/:id",
   verifyBodyRequest(schemaProduct),

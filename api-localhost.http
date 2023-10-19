@@ -43,3 +43,37 @@ Authorization: Bearer {{token}}
     "email":"luh@teste.com",
     "senha": "12345"
 }
+
+###
+POST {{url}}/produto
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "descricao":"Caixa de bombo",
+    "quantidade_estoque":0,
+    "valor":1000,
+    "categoria_id": 2
+}
+###
+POST {{url}}/produto
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "descricao":"Caixa de bombo",
+    "quantidade_estoque":0,
+    "valor":1000,
+    "categoria_id": 4
+}
+
+###
+GET {{url}}/produto
+Authorization: Bearer {{token}}
+
+###
+GET {{url}}/produto
+?filtro[] =mercado
+&&filtro[] =Celulares
+&&filtro[] =teste
+Authorization: Bearer {{token}}
