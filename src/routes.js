@@ -10,6 +10,7 @@ const {
   verifyEmail,
   verifyCategoryExist,
   verifyByIdAnyDataBase,
+  verifyProductDescription,
 } = require("./middlewares/verify");
 const login = require("./controllers/login");
 const {
@@ -58,6 +59,7 @@ routes.post(
   "/produto",
   verifyBodyRequest(schemaProduct),
   verifyCategoryExist,
+  verifyProductDescription("create"),
   createProduct
 );
 routes.get("/produto", listProducts);
@@ -66,12 +68,9 @@ routes.put(
   verifyByIdAnyDataBase("produtos"),
   verifyBodyRequest(schemaProduct),
   verifyCategoryExist,
+  verifyProductDescription("update"),
   updateProduct
 );
-routes.get(
-  "/produto/:id",
-  verifyByIdAnyDataBase("produtos"),
-  detailProduct
-);
+routes.get("/produto/:id", verifyByIdAnyDataBase("produtos"), detailProduct);
 
 module.exports = routes;
