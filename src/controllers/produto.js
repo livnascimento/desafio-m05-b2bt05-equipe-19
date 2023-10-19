@@ -26,6 +26,12 @@ const createProduct = async (req, res) => {
 const listProducts = async (req, res) => {
   let { filtro } = req.query;
 
+  if (!Array.isArray(filtro)) {
+    let array = [];
+    array.push(filtro);
+    filtro = array;
+  }
+
   filtro = filtro.filter((fil) => fil !== "");
 
   try {
