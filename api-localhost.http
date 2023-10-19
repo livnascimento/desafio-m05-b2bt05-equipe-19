@@ -27,7 +27,7 @@ Content-Type: application/json
 @token = {{createLogin.response.body.token}}
 
 ###
-@id = {{createLogin.response.body.authenticatedUser.id}}
+@idUser = {{createLogin.response.body.authenticatedUser.id}}
 
 ###
 GET {{url}}/usuario
@@ -51,25 +51,27 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "descricao":"Caixa de bombo",
+    "descricao":"Bombom 5",
     "quantidade_estoque":0,
     "valor":1000,
     "categoria_id": 2
 }
+
 ###
-POST {{url}}/produto
 # @name createID
+POST {{url}}/produto
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "descricao":"Caixa de bombo",
+    "descricao":"Bombom 4",
     "quantidade_estoque":0,
     "valor":1000,
-    "categoria_id": 4
+    "categoria_id": 5
 }
+
 ###
-@id = {{createID.response.body.id}}
+@idProduct = {{createID.response.body.id}}
 
 ###
 GET {{url}}/produto
@@ -77,18 +79,18 @@ Authorization: Bearer {{token}}
 
 ###
 GET {{url}}/produto
-?filtro=mercado
-&&filtro=Teste
+?categoria_id=2
+&categoria_id=5
 Authorization: Bearer {{token}}
 
 ###
-PUT  {{url}}/produto/{{id}}
+PUT  {{url}}/produto/{{idProduct}}
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "descricao":"Caixa de bombo",
-    "quantidade_estoque":0,
+    "descricao":"Bombom 5",
+    "quantidade_estoque":333,
     "valor":1000,
     "categoria_id": 4
 }

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon ./src/index",
     "start": "node ./src/index",
-    "migrations": "knex migrate:latest"
+    "migrations": "knex migrate:latest",
+    "migrations:rollback": "knex migrate:rollback --all"
   },
   "keywords": [],
   "author": "",
