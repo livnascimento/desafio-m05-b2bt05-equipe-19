@@ -24,6 +24,7 @@ const {
   createProduct,
   listProducts,
   updateProduct,
+  detailProduct,
 } = require("./controllers/produto");
 
 const routes = express();
@@ -66,6 +67,11 @@ routes.put(
   verifyBodyRequest(schemaProduct),
   verifyCategoryExist,
   updateProduct
+);
+routes.get(
+  "/produto/:id",
+  verifyByIdAnyDataBase("produtos"),
+  detailProduct
 );
 
 module.exports = routes;

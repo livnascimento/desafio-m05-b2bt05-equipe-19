@@ -85,4 +85,15 @@ const updateProduct = async (req, res) => {
   }
 };
 
-module.exports = { createProduct, listProducts, updateProduct };
+const detailProduct = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const product = await knex("produtos").where({id}).first();
+    return res.json(product);
+  } catch (error) {
+    return res.status(500).json({ message: "Erro interno do servidor." });
+  }
+}
+
+module.exports = { createProduct, listProducts, updateProduct, detailProduct };
