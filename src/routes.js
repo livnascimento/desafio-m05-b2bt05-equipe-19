@@ -25,6 +25,7 @@ const {
   listProducts,
   updateProduct,
   detailProduct,
+  deleteProduct,
 } = require("./controllers/produto");
 
 const routes = express();
@@ -72,6 +73,11 @@ routes.get(
   "/produto/:id",
   verifyByIdAnyDataBase("produtos"),
   detailProduct
+);
+routes.delete(
+  "/produto/:id",
+  verifyByIdAnyDataBase("produtos"),
+  deleteProduct
 );
 
 module.exports = routes;

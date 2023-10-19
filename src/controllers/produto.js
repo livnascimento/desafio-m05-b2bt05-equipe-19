@@ -94,6 +94,17 @@ const detailProduct = async (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: "Erro interno do servidor." });
   }
+};
+
+const deleteProduct = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const product = await knex("produtos").where({id}).delete();
+    return res.status(204).send();
+  } catch (error) {
+    return res.status(500).json({ message: "Erro interno do servidor." });
+  }
 }
 
-module.exports = { createProduct, listProducts, updateProduct, detailProduct };
+module.exports = { createProduct, listProducts, updateProduct, detailProduct, deleteProduct };
