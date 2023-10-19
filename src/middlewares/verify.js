@@ -61,4 +61,26 @@ const verifyCategoryExist = async (req, res, next) => {
   next();
 };
 
-module.exports = { verifyBodyRequest, verifyEmail, verifyCategoryExist };
+const verifyByIdAnyDataBase = (selectDataBase) => async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const findId = await knex(selectDataBase).where({ id }).first();
+
+    if (!findId) {
+      return res.status(400).json({
+        message: `Não foi possivel localizar esse id no banco de dados ${selectDataBase}`,
+      });
+    }
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+  next();
+};
+
+module.exports = {
+  verifyBodyRequest,
+  verifyEmail,
+  verifyCategoryExist,
+  verifyByIdAnyDataBase,
+};

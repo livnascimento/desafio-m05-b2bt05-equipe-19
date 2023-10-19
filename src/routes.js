@@ -9,6 +9,7 @@ const {
   verifyBodyRequest,
   verifyEmail,
   verifyCategoryExist,
+  verifyByIdAnyDataBase,
 } = require("./middlewares/verify");
 const login = require("./controllers/login");
 const {
@@ -61,6 +62,7 @@ routes.post(
 routes.get("/produto", listProducts);
 routes.put(
   "/produto/:id",
+  verifyByIdAnyDataBase("produtos"),
   verifyBodyRequest(schemaProduct),
   verifyCategoryExist,
   updateProduct
