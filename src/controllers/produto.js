@@ -24,29 +24,27 @@ const createProduct = async (req, res) => {
 };
 
 const listProducts = async (req, res) => {
-  let { filtro } = req.query;
+  let { categoria_id } = req.query;
 
   try {
-    if (filtro && filtro.length > 0) {
-      if (!Array.isArray(filtro)) {
+    if (categoria_id && categoria_id.length > 0) {
+      if (!Array.isArray(categoria_id)) {
         let array = [];
-        array.push(filtro);
-        filtro = array;
+        array.push(categoria_id);
+        categoria_id = array;
       }
+      categoria_id = categoria_id.map((fil) => Number(fil));
 
-      filtro = filtro.filter((fil) => fil !== "");
-      filtro = filtro.map((fil) => fil.trim().toLowerCase());
+      let query = `c.id=? `;
 
-      let query = `LOWER(c.descricao)=? `;
-
-      for (let x = 1; x < filtro.length; x++) {
-        query += ` or LOWER(c.descricao)=?`;
+      for (let x = 1; x < categoria_id.length; x++) {
+        query += ` or c.id=?`;
       }
 
       const products = await knex("produtos")
         .join("categorias as c", "produtos.categoria_id", "c.id")
         .select("produtos.*", "c.descricao as categoria_descricao")
-        .whereRaw(query, filtro);
+        .whereRaw(query, categoria_id);
       return res.status(200).json(products);
     }
 

@@ -77,9 +77,8 @@ Authorization: Bearer {{token}}
 
 ###
 GET {{url}}/produto
-?filtro=mercado
-&&filtro=Celulares
-&&filtro=teste
+?categoria_id=2
+&categoria_id=5
 Authorization: Bearer {{token}}
 
 ###
