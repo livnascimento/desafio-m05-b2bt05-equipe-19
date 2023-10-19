@@ -45,14 +45,14 @@ const listProducts = async (req, res) => {
 
       const products = await knex("produtos")
         .join("categorias as c", "produtos.categoria_id", "c.id")
-        .select("*", "c.descricao as categoria_descricao")
+        .select("produtos.*", "c.descricao as categoria_descricao")
         .whereRaw(query, filtro);
       return res.status(200).json(products);
     }
 
     const products = await knex("produtos")
       .join("categorias as c", "produtos.categoria_id", "c.id")
-      .select("*", "c.descricao as categoria_descricao");
+      .select("produtos.*", "c.descricao as categoria_descricao");
 
     return res.status(200).json(products);
   } catch (error) {
