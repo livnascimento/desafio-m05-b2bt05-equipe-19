@@ -1,7 +1,9 @@
 const knex = require("../db/db-knex");
 
 const createProduct = async (req, res) => {
-  const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
+  const { quantidade_estoque, valor, categoria_id } = req.body;
+  let { descricao } = req.body;
+  descricao = descricao.trim();
 
   try {
     const product = await knex("produtos")
@@ -61,7 +63,9 @@ const listProducts = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   const { id } = req.params;
-  const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
+  const { quantidade_estoque, valor, categoria_id } = req.body;
+  let { descricao } = req.body;
+  descricao = descricao.trim();
 
   try {
     const product = await knex("produtos")
@@ -89,11 +93,11 @@ const detailProduct = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const product = await knex("produtos").where({id}).first();
+    const product = await knex("produtos").where({ id }).first();
     return res.json(product);
   } catch (error) {
     return res.status(500).json({ message: "Erro interno do servidor." });
   }
-}
+};
 
 module.exports = { createProduct, listProducts, updateProduct, detailProduct };

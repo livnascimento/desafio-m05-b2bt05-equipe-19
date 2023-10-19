@@ -44,6 +44,38 @@ const verifyEmail = (requestType) => async (req, res, next) => {
   }
 };
 
+const verifyProductDescription = (type) => async (req, res, next) => {
+  const { id } = req.params;
+  const { descricao } = req.body;
+  const description = descricao.toLowerCase().trim();
+  try {
+    const productExist = await knex("produtos")
+      .whereRaw("LOWER(descricao)=?", description)
+      .first();
+
+    if (type === "create" && productExist) {
+      return res.status(400).json({
+        message:
+          "Já existe um produto com essa descrição já existe no banco de dados, mude a descrição, ou use a rota de atualizar produto",
+      });
+    }
+
+    // console.log(id);
+    // console.log(productExist.id);
+
+    if (type === "update" && productExist && productExist.id !== Number(id)) {
+      return res.status(400).json({
+        message:
+          "Já existe um produto com essa descrição já existe no banco de dados, mude a descrição",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ message: error.message });
+  }
+  next();
+};
+
 const verifyCategoryExist = async (req, res, next) => {
   const { categoria_id } = req.body;
   try {
@@ -82,5 +114,6 @@ module.exports = {
   verifyBodyRequest,
   verifyEmail,
   verifyCategoryExist,
+  verifyProductDescription,
   verifyByIdAnyDataBase,
 };
