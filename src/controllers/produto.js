@@ -26,16 +26,15 @@ const createProduct = async (req, res) => {
 const listProducts = async (req, res) => {
   let { filtro } = req.query;
 
-  if (!Array.isArray(filtro)) {
-    let array = [];
-    array.push(filtro);
-    filtro = array;
-  }
-
-  filtro = filtro.filter((fil) => fil !== "");
-
   try {
     if (filtro && filtro.length > 0) {
+      if (!Array.isArray(filtro)) {
+        let array = [];
+        array.push(filtro);
+        filtro = array;
+      }
+
+      filtro = filtro.filter((fil) => fil !== "");
       filtro = filtro.map((fil) => fil.trim().toLowerCase());
 
       let query = `LOWER(c.descricao)=? `;
