@@ -14,7 +14,7 @@ Content-Type: application/json
 }
 
 ###
-# @name createProject
+# @name createLogin
 POST {{url}}/login
 Content-Type: application/json
 
@@ -24,10 +24,10 @@ Content-Type: application/json
 }
 
 ###
-@token = {{createProject.response.body.token}}
+@token = {{createLogin.response.body.token}}
 
 ###
-@id = {{createProject.response.body.authenticatedUser.id}}
+@id = {{createLogin.response.body.authenticatedUser.id}}
 
 ###
 GET {{url}}/usuario
@@ -42,4 +42,54 @@ Authorization: Bearer {{token}}
     "nome":"Luiza Ferreira",
     "email":"luh@teste.com",
     "senha": "12345"
+}
+
+###
+# @name createID
+POST {{url}}/produto
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "descricao":"Caixa de bombo",
+    "quantidade_estoque":0,
+    "valor":1000,
+    "categoria_id": 2
+}
+###
+POST {{url}}/produto
+# @name createID
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "descricao":"Caixa de bombo",
+    "quantidade_estoque":0,
+    "valor":1000,
+    "categoria_id": 4
+}
+###
+@id = {{createID.response.body.id}}
+
+###
+GET {{url}}/produto
+Authorization: Bearer {{token}}
+
+###
+GET {{url}}/produto
+?filtro[] =mercado
+&&filtro[] =Celulares
+&&filtro[] =teste
+Authorization: Bearer {{token}}
+
+###
+PUT  {{url}}/produto/{{id}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "descricao":"Caixa de bombo",
+    "quantidade_estoque":0,
+    "valor":1000,
+    "categoria_id": 4
 }
