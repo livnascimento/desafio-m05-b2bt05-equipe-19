@@ -2,22 +2,188 @@
 
 ![Static Badge](https://img.shields.io/badge/status-em%20desenvolvimento-blue)
 
+## Pré-visualização
+
+![Insomnia-API](./src/assets/previsualizacao.gif)
 
 ## Descrição do Projeto
 QuickSale é um Projeto Interdisciplinar de Conclusão de Curso que visa simular uma aplicação de frente de caixa, com foco na primeira sprint de desenvolvimento. Atualmente, o projeto oferece os seguintes endpoints:
 
-### Endpoints Públicos (Acessíveis sem Autenticação)
+### Endpoints Públicos (acessíveis sem autenticação)
 
-- Listar categorias: `GET /categorias`
-- Cadastrar usuário: `POST /usuario`
-- Efetuar login do usuário: `POST /login`
+- Listar categorias: 
+    
+    `GET` `/categorias`
 
-### Endpoints Privados (Requerem Autenticação)
+    Exemplo de requisição
 
-<span style="font-size: smaller; color: gray;">(endpoints em fase de desenvolvimento/teste)</span>
+    ```json
+    // Sem conteúdo no corpo (body) da requisição
+    ```
 
-- Editar perfil do usuário logado: `PUT /usuario`
-- Detalhar perfil do usuário logado: `GET /usuario`
+- Cadastrar usuário: 
+
+    `POST` `/usuario`
+
+    Exemplo de requisição
+
+    ```json
+    {
+        "nome": "José",
+        "email": "jose@email.com",
+        "senha": "123456"
+    }
+    ```
+
+- Efetuar login do usuário: 
+
+    `POST` `/login`
+
+    Exemplo de requisição
+    
+    ```json
+    {
+        "email": "jose@email.com",
+        "senha": "123456"
+    }
+    ```
+
+### Endpoints Privados (requerem autenticação)
+
+- Editar perfil do usuário logado: 
+
+    `PUT` `/usuario`
+
+    Exemplo de requisição
+
+    ```json
+    {
+        "nome": "José da Silva",
+        "email": "josesilva@email.com",
+        "senha": "abc456"
+    }
+    ```
+
+- Detalhar perfil do usuário logado: 
+
+    `GET` `/usuario`
+
+    Exemplo de requisição
+    
+    ```json
+    // Sem conteúdo no corpo (body) da requisição
+    ```
+
+- Cadastrar produto
+
+    `POST` `/produto`
+
+    Exemplo de requisição
+
+    ```json
+    {
+        "descricao": "Barra de chocolate",
+        "quantidade_estoque": 120,
+        "valor": 800, // em centavos
+        "categoria_id": 4
+    }
+    ```
+
+- Editar produto
+
+    `PUT` `/produto/:id`
+
+    Exemplo de requisição
+    
+    ```json
+    {
+        "descricao": "Chocolate em pó",
+        "quantidade_estoque": 120,
+        "valor": 1200, 
+        "categoria_id": 4
+    }
+    ```
+
+- Listar produtos
+
+    `GET` `/produto`
+
+    Exemplo de requisição
+
+    ```json
+        //Sem conteúdo no corpo (body) da requisição
+    ```
+
+- Listar produtos por categoria     
+
+    `GET` `/produto?categoria_id`
+
+    Exemplo de requisição
+
+    ```json
+        //Sem conteúdo no corpo (body) da requisição
+    ```
+
+- Detalhar produto
+
+    `GET` `/produto/:id`
+
+    Exemplo de requisição
+
+    ```json
+        //Sem conteúdo no corpo (body) da requisição
+    ```
+
+- Deletar produto
+
+    `DELETE` `/produto/:id`
+
+    Exemplo de requisição
+
+    ```json
+        //Sem conteúdo no corpo (body) da requisição
+    ```
+
+- Cadastrar cliente
+
+    `POST` `/cliente`
+
+    Exemplo de requisição
+
+    ```json
+    {
+        "nome": "Maria",
+        "email": "maria@email.com",
+        "cpf": "11122233344",
+        "cep": "13181779"
+    }
+    ```
+
+- Editar dados do cliente
+
+    `PUT` `/cliente/:id`
+
+    Exemplo de requisição
+
+    ```json
+    {
+        "nome": "Maria Sousa",
+        "email": "mariasousa@email.com",
+        "cpf": "11122233444",
+        "cep": "13181779"
+    }
+    ```
+
+- Listar clientes
+
+    `GET` `/cliente`
+
+    Exemplo de requisição
+
+    ```json
+        // Sem conteúdo no corpo (body) da requisição
+    ```
+
 
 ## Tecnologias Utilizadas
 - Linguagem de Programação: Node.js
