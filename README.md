@@ -4,10 +4,10 @@
 
 ## Pré-visualização
 
-![Insomnia-API](./src/assets/previsualizacao.gif)
+![Insomnia-API](./src/assets/preview.gif)
 
 ## Descrição do Projeto
-QuickSale é um Projeto Interdisciplinar de Conclusão de Curso que visa simular uma aplicação de frente de caixa, com foco na primeira sprint de desenvolvimento. Atualmente, o projeto oferece os seguintes endpoints:
+QuickSale é o Projeto Interdisciplinar de Conclusão do Curso de Desenvolvimento de Software com foco back-end da [Cubos Academy](https://cubos.academy/) que visa simular uma aplicação de frente de caixa. Atualmente, o projeto oferece os seguintes endpoints:
 
 ### Endpoints Públicos (acessíveis sem autenticação)
 
