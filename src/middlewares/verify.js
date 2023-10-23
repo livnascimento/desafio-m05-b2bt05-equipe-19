@@ -60,9 +60,6 @@ const verifyProductDescription = (type) => async (req, res, next) => {
       });
     }
 
-    // console.log(id);
-    // console.log(productExist.id);
-
     if (type === "update" && productExist && productExist.id !== Number(id)) {
       return res.status(400).json({
         message:
@@ -110,16 +107,29 @@ const verifyByIdAnyDataBase = (selectDataBase) => async (req, res, next) => {
   next();
 };
 
-const verifyCPF = async (req, res, next) => {
+const verifyCPF = (requestType) => async (req, res, next)  => {
   const { cpf } = req.body;
   try {
-    const user = await knex("clientes").where({ cpf }).first();
+    const client = await knex("clientes").where({ cpf }).first();
 
-    const cpfExists = user ? true : false;
-    if (cpfExists)
-      return res
-        .status(400)
-        .json({ message: "Esse CPF já está cadastrado" });
+    if (requestType == "create") {
+      const cpfExists = client ? true : false;
+      if (cpfExists)
+        return res
+          .status(400)
+          .json({ message: "Esse cpf já está cadastrado" });
+    } else if (requestType == "update") {
+      const { id } = req.params;
+
+      if (client) {
+        const cpfExists = client.id == id ? false : true;
+        if (cpfExists) {
+          return res
+            .status(400)
+            .json({ message: "Esse cpf já está cadastrado" });
+        }
+      }
+    }
 
     next();
   } catch (error) {

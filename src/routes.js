@@ -92,14 +92,15 @@ routes.post(
   "/cliente",
   verifyBodyRequest(schemaClient),
   verifyEmail("create", "clientes"),
-  verifyCPF,
+  verifyCPF("create"),
   createClient
 );
 
 routes.put(
   "/cliente/:id",
   verifyByIdAnyDataBase("clientes"),
-  verifyBodyRequest(schemaProduct),
+  verifyBodyRequest(schemaClient),
+  verifyCPF("update"),
   updateClient
 );
 

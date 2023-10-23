@@ -31,15 +31,16 @@ const updateClient = async (req, res) => {
             .where({ id })
             .returning("*");
 
-        if (!product[0]) {
+        if (!client[0]) {
             return res.status(500).json({
                 message:
-                    "Erro interno do servidor. Não foi possivel realizar o cadastro, tente novamente",
+                    "Erro interno do servidor. Não foi possivel realizar a atualização, tente novamente",
             });
         }
 
         return res.status(204).send();
     } catch (error) {
+        console.log(error);
         return res.status(500).json("Erro interno do servidor");
     }
 };
