@@ -19,11 +19,7 @@ const {
     detailClient
 } = require("../controllers/clients");
 
-const authentication = require("../middlewares/authenticate");
-
 const clientRoutes = express();
-
-clientRoutes.use(authentication);
 
 clientRoutes.post(
     "/cliente",

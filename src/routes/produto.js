@@ -18,11 +18,8 @@ const {
     detailProduct,
     deleteProduct,
 } = require("../controllers/products");
-const authentication = require("../middlewares/authenticate");
 
 const productRoutes = express();
-
-productRoutes.use(authentication);
 
 productRoutes.post(
     "/produto",

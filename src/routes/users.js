@@ -29,6 +29,7 @@ userRoutes.post(
 userRoutes.use(authentication);
 
 userRoutes.get("/usuario", detailProfile);
+
 userRoutes.put(
     "/usuario",
     verifyBodyRequest(schemaUser),

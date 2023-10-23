@@ -3,13 +3,14 @@ const loginRoutes = require('./login');
 const productRoutes = require('./produto');
 const userRoutes = require('./users');
 const clientRoutes = require('./clients');
+const categoryRoutes = require('./categories');
 
 const routes = express();
 
-routes.use(loginRoutes);
-routes.use(productRoutes);
-routes.use(userRoutes);
-routes.use(clientRoutes);
 routes.use(categoryRoutes);
+routes.use(loginRoutes);
+routes.use(userRoutes);
+routes.use(productRoutes);
+routes.use(clientRoutes);
 
 module.exports = routes;
