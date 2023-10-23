@@ -1,4 +1,5 @@
 const express = require("express");
+
 const { listCategories } = require("./controllers/categories");
 const {
   createUser,
@@ -29,7 +30,13 @@ const {
   detailProduct,
   deleteProduct,
 } = require("./controllers/produto");
-const { createClient } = require("./controllers/clients");
+
+const {
+  createClient,
+  updateClient,
+  listClient,
+  detailClient
+} = require("./controllers/clients");
 
 const routes = express();
 
@@ -87,6 +94,17 @@ routes.post(
   verifyEmail("create", "clientes"),
   verifyCPF,
   createClient
-)
+);
+
+routes.put(
+  "/cliente/:id",
+  verifyByIdAnyDataBase("clientes"),
+  verifyBodyRequest(schemaProduct),
+  updateClient
+);
+
+routes.get("/cliente", listClient);
+
+routes.get("/produto/:id", verifyByIdAnyDataBase("clientes"), detailClient);
 
 module.exports = routes;

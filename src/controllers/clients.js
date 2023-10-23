@@ -21,4 +21,53 @@ const createClient = async (req, res) => {
     }
 }
 
-module.exports = { createClient };
+const updateClient = async (req, res) => {
+    const { id } = req.params;
+    const { nome, email, cpf } = req.body;
+
+    try {
+        const client = await knex("clientes")
+            .update({ nome, email, cpf })
+            .where({ id })
+            .returning("*");
+
+        if (!product[0]) {
+            return res.status(500).json({
+                message:
+                    "Erro interno do servidor. Não foi possivel realizar o cadastro, tente novamente",
+            });
+        }
+
+        return res.status(204).send();
+    } catch (error) {
+        return res.status(500).json("Erro interno do servidor");
+    }
+};
+
+const listClient = async (req, res) => {
+    try {
+        const client = await knex("clientes");
+        return res.json(client);
+    } catch (error) {
+        return res.status(500).json({ message: "Erro interno do servidor." });
+    }
+};
+
+const detailProduct = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const client = await knex("clientes").where({ id }).first();
+        return res.json(client);
+    } catch (error) {
+        return res.status(500).json({ message: "Erro interno do servidor." });
+    }
+};
+
+
+module.exports = {
+    createClient,
+    updateClient,
+    listClient,
+    detailProduct
+};
