@@ -29,7 +29,7 @@ const {
   updateProduct,
   detailProduct,
   deleteProduct,
-} = require("./controllers/produto");
+} = require("./controllers/products");
 
 const {
   createClient,
