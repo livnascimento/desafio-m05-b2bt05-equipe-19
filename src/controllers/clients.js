@@ -53,7 +53,7 @@ const listClient = async (req, res) => {
     }
 };
 
-const detailProduct = async (req, res) => {
+const detailClient = async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -69,5 +69,5 @@ module.exports = {
     createClient,
     updateClient,
     listClient,
-    detailProduct
+    detailClient
 };
