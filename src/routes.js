@@ -106,6 +106,6 @@ routes.put(
 
 routes.get("/cliente", listClient);
 
-routes.get("/produto/:id", verifyByIdAnyDataBase("clientes"), detailClient);
+routes.get("/cliente/:id", verifyByIdAnyDataBase("clientes"), detailClient);
 
 module.exports = routes;
