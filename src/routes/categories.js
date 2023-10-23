@@ -1,9 +1,9 @@
-// const express = require("express");
+const express = require("express");
 
-// const { listCategories } = require("./controllers/categories");
+const { listCategories } = require("../controllers/categories");
 
-// const routes = express();
+const categoryRoutes = express();
 
-// routes.get("/categorias", listCategories);
+categoryRoutes.get("/categorias", listCategories);
 
-// module.exports = routes;
+module.exports = categoryRoutes;

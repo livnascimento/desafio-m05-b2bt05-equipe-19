@@ -1,23 +1,23 @@
-// const express = require("express");
+const express = require("express");
 
-// const login = require("./controllers/login");
+const login = require("../controllers/login");
 
-// const {
-//     schemaLogin
-// } = require("./utils/schemas");
+const {
+    schemaLogin
+} = require("../utils/schemas");
 
-// const {
-//     verifyBodyRequest,
-//     verifyEmail
-// } = require("./middlewares/verify");
+const {
+    verifyBodyRequest,
+    verifyEmail
+} = require("../middlewares/verify");
 
-// const routes = express();
+const loginRoutes = express();
 
-// routes.post(
-//     "/login",
-//     verifyBodyRequest(schemaLogin),
-//     verifyEmail("login", "usuarios"),
-//     login
-// );
+loginRoutes.post(
+    "/login",
+    verifyBodyRequest(schemaLogin),
+    verifyEmail("login", "usuarios"),
+    login
+);
 
-// module.exports = routes;
+module.exports = loginRoutes;

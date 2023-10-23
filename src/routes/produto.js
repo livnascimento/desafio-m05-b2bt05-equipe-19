@@ -1,47 +1,50 @@
-// const express = require("express");
+const express = require("express");
 
-// const {
-//     verifyBodyRequest,
-//     verifyCategoryExist,
-//     verifyByIdAnyDataBase,
-//     verifyProductDescription,
-// } = require("./middlewares/verify");
+const {
+    verifyBodyRequest,
+    verifyCategoryExist,
+    verifyByIdAnyDataBase,
+    verifyProductDescription,
+} = require("../middlewares/verify");
 
-// const {
-//     schemaProduct
-// } = require("./utils/schemas");
+const {
+    schemaProduct
+} = require("../utils/schemas");
 
-// const {
-//     createProduct,
-//     listProducts,
-//     updateProduct,
-//     detailProduct,
-//     deleteProduct,
-// } = require("./controllers/produto");
+const {
+    createProduct,
+    listProducts,
+    updateProduct,
+    detailProduct,
+    deleteProduct,
+} = require("../controllers/products");
+const authentication = require("../middlewares/authenticate");
 
-// const routes = express();
+const productRoutes = express();
 
-// routes.post(
-//     "/produto",
-//     verifyBodyRequest(schemaProduct),
-//     verifyCategoryExist,
-//     verifyProductDescription("create"),
-//     createProduct
-// );
-// routes.get("/produto", listProducts);
-// routes.put(
-//     "/produto/:id",
-//     verifyByIdAnyDataBase("produtos"),
-//     verifyBodyRequest(schemaProduct),
-//     verifyCategoryExist,
-//     verifyProductDescription("update"),
-//     updateProduct
-// );
-// routes.get("/produto/:id", verifyByIdAnyDataBase("produtos"), detailProduct);
-// routes.delete(
-//     "/produto/:id",
-//     verifyByIdAnyDataBase("produtos"),
-//     deleteProduct
-// );
+productRoutes.use(authentication);
 
-// module.exports = routes;
+productRoutes.post(
+    "/produto",
+    verifyBodyRequest(schemaProduct),
+    verifyCategoryExist,
+    verifyProductDescription("create"),
+    createProduct
+);
+productRoutes.get("/produto", listProducts);
+productRoutes.put(
+    "/produto/:id",
+    verifyByIdAnyDataBase("produtos"),
+    verifyBodyRequest(schemaProduct),
+    verifyCategoryExist,
+    verifyProductDescription("update"),
+    updateProduct
+);
+productRoutes.get("/produto/:id", verifyByIdAnyDataBase("produtos"), detailProduct);
+productRoutes.delete(
+    "/produto/:id",
+    verifyByIdAnyDataBase("produtos"),
+    deleteProduct
+);
+
+module.exports = productRoutes;

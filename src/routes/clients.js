@@ -1,43 +1,47 @@
-// const express = require("express");
+const express = require("express");
 
-// const {
-//     verifyBodyRequest,
-//     verifyEmail,
-//     verifyByIdAnyDataBase,
-//     verifyCPF
-// } = require("./middlewares/verify");
+const {
+    verifyBodyRequest,
+    verifyEmail,
+    verifyByIdAnyDataBase,
+    verifyCPF
+} = require("../middlewares/verify");
 
-// const {
-//     schemaProduct,
-//     schemaClient,
-// } = require("./utils/schemas");
+const {
+    schemaProduct,
+    schemaClient,
+} = require("../utils/schemas");
 
-// const {
-//     createClient,
-//     updateClient,
-//     listClient,
-//     detailClient
-// } = require("./controllers/clients");
+const {
+    createClient,
+    updateClient,
+    listClient,
+    detailClient
+} = require("../controllers/clients");
 
-// const routes = express();
+const authentication = require("../middlewares/authenticate");
 
-// routes.post(
-//     "/cliente",
-//     verifyBodyRequest(schemaClient),
-//     verifyEmail("create", "clientes"),
-//     verifyCPF,
-//     createClient
-// );
+const clientRoutes = express();
 
-// routes.put(
-//     "/cliente/:id",
-//     verifyByIdAnyDataBase("clientes"),
-//     verifyBodyRequest(schemaProduct),
-//     updateClient
-// );
+clientRoutes.use(authentication);
 
-// routes.get("/cliente", listClient);
+clientRoutes.post(
+    "/cliente",
+    verifyBodyRequest(schemaClient),
+    verifyEmail("create", "clientes"),
+    verifyCPF,
+    createClient
+);
 
-// routes.get("/cliente/:id", verifyByIdAnyDataBase("clientes"), detailClient);
+clientRoutes.put(
+    "/cliente/:id",
+    verifyByIdAnyDataBase("clientes"),
+    verifyBodyRequest(schemaProduct),
+    updateClient
+);
 
-// module.exports = routes;
+clientRoutes.get("/cliente", listClient);
+
+clientRoutes.get("/cliente/:id", verifyByIdAnyDataBase("clientes"), detailClient);
+
+module.exports = clientRoutes;

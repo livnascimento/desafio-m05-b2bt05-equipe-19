@@ -1,36 +1,39 @@
-// const express = require("express");
+const express = require("express");
 
-// const {
-//     verifyBodyRequest,
-//     verifyEmail
-// } = require("./middlewares/verify");
+const {
+    verifyBodyRequest,
+    verifyEmail
+} = require("../middlewares/verify");
 
-// const {
-//     schemaUser
-// } = require("./utils/schemas");
+const {
+    schemaUser
+} = require("../utils/schemas");
 
-// const {
-//     createUser,
-//     detailProfile,
-//     updateUser,
-// } = require("./controllers/users");
+const {
+    createUser,
+    detailProfile,
+    updateUser,
+} = require("../controllers/users");
 
-// const routes = express();
+const authentication = require("../middlewares/authenticate");
 
-// routes.post(
-//     "/usuario",
-//     verifyBodyRequest(schemaUser),
-//     verifyEmail("create", "usuarios"),
-//     createUser
-// );
+const userRoutes = express();
 
-// //depois login
-// routes.get("/usuario", detailProfile);
-// routes.put(
-//     "/usuario",
-//     verifyBodyRequest(schemaUser),
-//     verifyEmail("update", "usuarios"),
-//     updateUser
-// );
+userRoutes.post(
+    "/usuario",
+    verifyBodyRequest(schemaUser),
+    verifyEmail("create", "usuarios"),
+    createUser
+);
 
-// module.exports = routes;
+userRoutes.use(authentication);
+
+userRoutes.get("/usuario", detailProfile);
+userRoutes.put(
+    "/usuario",
+    verifyBodyRequest(schemaUser),
+    verifyEmail("update", "usuarios"),
+    updateUser
+);
+
+module.exports = userRoutes;
