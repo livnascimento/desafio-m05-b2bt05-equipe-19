@@ -10,18 +10,15 @@ const createProduct = async (req, res) => {
       .insert({ descricao, quantidade_estoque, valor, categoria_id })
       .returning("*");
 
-    if (!product[0]) {
-      return res.status(500).json({
-        message:
-          "Erro interno do servidor. Não foi possivel realizar o cadastro, tente novamente",
-      });
+    if (!product[0] || product.length < 1) {
+      return res.status(400).json({ message: "Erro interno do servidor. Não foi possivel realizar o cadastro, tente novamente" });
     }
 
     return res
       .status(201)
       .json({ ...product[0], categoria_descricao: req.categoria_id_nome });
   } catch (error) {
-    return res.status(500).json({ message: "Erro interno do servidor." });
+    return res.status(400).json({ message: "Erro interno do servidor." });
   }
 };
 
@@ -104,7 +101,7 @@ const deleteProduct = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const product = await knex("produtos").where({id}).delete();
+    const product = await knex("produtos").where({ id }).delete();
     return res.status(204).send();
   } catch (error) {
     return res.status(500).json({ message: "Erro interno do servidor." });

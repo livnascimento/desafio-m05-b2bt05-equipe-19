@@ -13,7 +13,7 @@ const createUser = async (req, res) => {
 
     return res.status(201).json(user[0]);
   } catch (error) {
-    return res.status(500).json({ message: "Erro interno do servidor." });
+    return res.status(400).json({ message: "Erro interno do servidor." });
   }
 };
 
@@ -23,15 +23,15 @@ const detailProfile = async (req, res) => {
   try {
     const user = await knex("usuarios").where({ id }).first();
 
-    if (!user) {
-      return res.status(401).json({ message: "Usuario não encontrado" });
+    if (!user || user.lenght < 1) {
+      return res.status(404).json({ message: "Usuario não encontrado" });
     }
 
     const { senha: _, ...userDetails } = user;
 
     return res.json(userDetails);
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(400).json({ message: error.message });
   }
 };
 
@@ -47,7 +47,7 @@ const updateUser = async (req, res) => {
 
     return res.status(204).send();
   } catch (error) {
-    return res.status(500).json("Erro interno do servidor");
+    return res.status(400).json({message: "Erro interno do servidor"});
   }
 };
 

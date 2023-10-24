@@ -4,6 +4,6 @@ const { listCategories } = require("../controllers/categories");
 
 const categoryRoutes = express();
 
-categoryRoutes.get("/categorias", listCategories);
+categoryRoutes.get("/categoria", listCategories);
 
 module.exports = categoryRoutes;
