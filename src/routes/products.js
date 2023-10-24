@@ -9,7 +9,7 @@ const {
 
 const {
     schemaProduct
-} = require("../utils/schemas");
+} = require("../schemas/product");
 
 const {
     createProduct,

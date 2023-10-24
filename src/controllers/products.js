@@ -53,8 +53,7 @@ const listProducts = async (req, res) => {
 
     return res.status(200).json(products);
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({ message: "Erro interno do servidor." });
+    return res.status(400).json({ message: "Erro interno do servidor." });
   }
 };
 
@@ -71,7 +70,7 @@ const updateProduct = async (req, res) => {
       .returning("*");
 
     if (!product[0]) {
-      return res.status(500).json({
+      return res.status(400).json({
         message:
           "Erro interno do servidor. Não foi possivel realizar o cadastro, tente novamente",
       });
@@ -81,8 +80,7 @@ const updateProduct = async (req, res) => {
       .status(201)
       .json({ ...product[0], categoria_descricao: req.categoria_id_nome });
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({ message: "Erro interno do servidor." });
+    return res.status(400).json({ message: "Erro interno do servidor." });
   }
 };
 
@@ -93,7 +91,7 @@ const detailProduct = async (req, res) => {
     const product = await knex("produtos").where({ id }).first();
     return res.json(product);
   } catch (error) {
-    return res.status(500).json({ message: "Erro interno do servidor." });
+    return res.status(400).json({ message: "Erro interno do servidor." });
   }
 };
 
@@ -104,7 +102,7 @@ const deleteProduct = async (req, res) => {
     const product = await knex("produtos").where({ id }).delete();
     return res.status(204).send();
   } catch (error) {
-    return res.status(500).json({ message: "Erro interno do servidor." });
+    return res.status(400).json({ message: "Erro interno do servidor." });
   }
 };
 
