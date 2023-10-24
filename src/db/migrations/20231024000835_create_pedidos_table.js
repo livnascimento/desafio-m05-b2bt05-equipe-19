@@ -1,8 +1,6 @@
 exports.up = function (knex) {
     return knex.schema.createTable("pedidos", function (table) {
         table.increments("id").primary();
-        table.string("descricao", 255)
-        .notNullable();
         table.integer("cliente_id")
         .unsigned()
         .notNullable()
