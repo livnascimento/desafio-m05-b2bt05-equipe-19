@@ -6,7 +6,7 @@ const createClient = async (req, res) => {
     const clientData = { nome, email, cpf };
 
     try {
-        if (cep) {
+        if (cep && cep != "") {
             const address = await lookUpAdressByCep(cep);
 
             if (address instanceof Error) return res.status(400).json({ message: "CEP inválido." });
@@ -17,7 +17,7 @@ const createClient = async (req, res) => {
 
         return res.status(201).json(client);
     } catch (error) {
-        return res.status(500).json({ message: "Erro interno do servidor." });
+        return res.status(400).json({ message: "Erro interno do servidor." });
     }
 }
 
@@ -40,7 +40,6 @@ const updateClient = async (req, res) => {
 
         return res.status(204).send();
     } catch (error) {
-        console.log(error);
         return res.status(500).json("Erro interno do servidor");
     }
 };
