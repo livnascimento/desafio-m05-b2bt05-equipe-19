@@ -8,9 +8,12 @@ const {
 } = require("../middlewares/verify");
 
 const {
-    schemaProduct,
     schemaClient,
-} = require("../utils/schemas");
+} = require("../schemas/client");
+
+const {
+    schemaProduct,
+} = require("../schemas/product")
 
 const {
     createClient,
@@ -25,7 +28,7 @@ clientRoutes.post(
     "/cliente",
     verifyBodyRequest(schemaClient),
     verifyEmail("create", "clientes"),
-    verifyCPF,
+    verifyCPF("create"),
     createClient
 );
 
@@ -33,6 +36,7 @@ clientRoutes.put(
     "/cliente/:id",
     verifyByIdAnyDataBase("clientes"),
     verifyBodyRequest(schemaProduct),
+    verifyCPF("update"),
     updateClient
 );
 
