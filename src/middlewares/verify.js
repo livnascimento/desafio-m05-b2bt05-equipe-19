@@ -15,6 +15,7 @@ const verifyEmail = (requestType, userType) => async (req, res, next) => {
   try {
     const user = await knex(userType).where({ email }).first();
 
+
     if (requestType == "create") {
       const emailExists = user ? true : false;
       if (emailExists)
@@ -37,7 +38,6 @@ const verifyEmail = (requestType, userType) => async (req, res, next) => {
         }
       }
     }
-
     next();
   } catch (error) {
     return res.status(400).json({ message: error.message });
@@ -67,7 +67,6 @@ const verifyProductDescription = (type) => async (req, res, next) => {
       });
     }
   } catch (error) {
-    console.log(error);
     return res.status(400).json({ message: error.message });
   }
   next();
@@ -92,23 +91,27 @@ const verifyCategoryExist = async (req, res, next) => {
 
 const verifyByIdAnyDataBase = (selectDataBase) => async (req, res, next) => {
   const { id } = req.params;
-
+  const { cliente_id } = req.body;
+  
   try {
-    const findId = await knex(selectDataBase).where({ id }).first();
+    const newId = id ?? cliente_id;
 
-    if (!findId) {
-      return res.status(400).json({
+    const findId = await knex(selectDataBase).where({ id: newId });
+
+    if (!findId || findId.length < 1) {
+      return res.status(404).json({
         message: `Não foi possivel localizar esse id no banco de dados ${selectDataBase}`,
       });
     }
+    next();
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
-  next();
 };
 
-const verifyCPF = (requestType) => async (req, res, next)  => {
+const verifyCPF = (requestType) => async (req, res, next) => {
   const { cpf } = req.body;
+  
   try {
     const client = await knex("clientes").where({ cpf }).first();
 
@@ -137,11 +140,41 @@ const verifyCPF = (requestType) => async (req, res, next)  => {
   }
 }
 
+const verifyAllProductsId = async (req, res, next) => {
+  const { pedido_produtos } = req.body;
+
+  if (!pedido_produtos || pedido_produtos.length < 1) return res.status(400).json({ message: "Pedido inválido." });
+
+  const errors = [];
+
+  try {
+
+    await Promise.all(
+      pedido_produtos.map(async (product) => {
+        const dbProduct = await knex("produtos").where({ id: product.produto_id });
+
+        if (!dbProduct || dbProduct.length < 1) {
+          errors.push(`Produto ${product.produto_id} não encontrado`);
+        } else if (dbProduct[0].quantidade_estoque < product.quantidade_produto) {
+          errors.push(`Estoque insuficiente do produto ${product.produto_id}. Quantidade disponível: ${dbProduct[0].quantidade_estoque}`);
+        }
+      })
+    );
+
+    if (errors.length > 0) return res.status(400).json({message: errors[0] });
+
+    next();
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+}
+
 module.exports = {
   verifyBodyRequest,
   verifyEmail,
   verifyCategoryExist,
   verifyProductDescription,
   verifyByIdAnyDataBase,
-  verifyCPF
+  verifyCPF,
+  verifyAllProductsId
 };
