@@ -4,7 +4,7 @@ const login = require("../controllers/login");
 
 const {
     schemaLogin
-} = require("../utils/schemas");
+} = require("../schemas/user");
 
 const {
     verifyBodyRequest,

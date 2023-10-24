@@ -1,4 +1,5 @@
 const express = require("express");
+const authentication = require("../middlewares/authenticate");
 
 const {
     verifyBodyRequest,
@@ -7,7 +8,7 @@ const {
 
 const {
     schemaUser
-} = require("../utils/schemas");
+} = require("../schemas/user");
 
 const {
     createUser,
@@ -15,7 +16,6 @@ const {
     updateUser,
 } = require("../controllers/users");
 
-const authentication = require("../middlewares/authenticate");
 
 const userRoutes = express();
 
