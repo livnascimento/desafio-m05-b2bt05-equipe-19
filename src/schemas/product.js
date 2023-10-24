@@ -20,7 +20,7 @@ exports.schemaProduct = joi.object({
         "number.integer":
           "O campo quantidade_estoque precisa ser um numero inteiro",
       }),
-    valor: joi.number().integer().allow(0).positive().required().messages({
+    valor: joi.number().integer().positive().required().messages({
       "any.required": "O campo valor é obrigatório",
       "number.positive": "O campo valor precisa ser um numero positivo",
       "number.base":
