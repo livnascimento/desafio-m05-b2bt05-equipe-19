@@ -20,13 +20,15 @@ exports.schemaOrder = joi.object({
                     'number.positive': 'O id deve ser maior que zero.'
                 }),
                 quantidade_produto: joi.number().required().positive().messages({
+                    'any.required': 'Não é possível adicionar um produto sem a quantidade.',
                     'number.base': 'A quantidade do produto deve ser um número.',
-                    'number.empty': 'A quantidade do produto não pode estar vazia.',
-                    'number.positive': 'A quantidade do produto deve ser maior que zero.'
+                    'number.empty': 'Não é possível adicionar um produto sem a quantidade.',
+                    'number.positive': 'Não é possível adicionar um produto sem a quantidade.'
                 })
             })
         ).messages({
-            'array.base': 'Produto inválido.',
-            'array.empty': 'Não é possível fazer um pedido sem produtos.',
+            'array.base': 'Você deve enviar uma lista com 1 ou mais produtos.',
+            'any.required': 'Você deve enviar uma lista com 1 ou mais produtos.',
+            'any.empty': 'Não é possível fazer um pedido sem produtos.',
         })
 })
