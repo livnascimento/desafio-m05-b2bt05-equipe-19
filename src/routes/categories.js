@@ -1,10 +1,9 @@
 const express = require("express");
 
 const { listCategories } = require("../controllers/categories");
-const { verifyCategoryExist } = require("../middlewares/verify");
 
 const categoryRoutes = express();
 
-categoryRoutes.get("/categoria", verifyCategoryExist, listCategories);
+categoryRoutes.get("/categoria", listCategories);
 
 module.exports = categoryRoutes;
