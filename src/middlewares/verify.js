@@ -15,7 +15,6 @@ const verifyEmail = (requestType, userType) => async (req, res, next) => {
   try {
     const user = await knex(userType).where({ email }).first();
 
-
     if (requestType == "create") {
       const emailExists = user ? true : false;
       if (emailExists)
@@ -92,9 +91,10 @@ const verifyCategoryExist = async (req, res, next) => {
 const verifyByIdAnyDataBase = (selectDataBase) => async (req, res, next) => {
   const { id } = req.params;
   const { cliente_id } = req.body;
-  
+  const { cliente_id: cliente_id_query } = req.query;
+
   try {
-    const newId = id ?? cliente_id;
+    const newId = id ?? cliente_id ?? cliente_id_query;
 
     const findId = await knex(selectDataBase).where({ id: newId });
 
@@ -111,16 +111,14 @@ const verifyByIdAnyDataBase = (selectDataBase) => async (req, res, next) => {
 
 const verifyCPF = (requestType) => async (req, res, next) => {
   const { cpf } = req.body;
-  
+
   try {
     const client = await knex("clientes").where({ cpf }).first();
 
     if (requestType == "create") {
       const cpfExists = client ? true : false;
       if (cpfExists)
-        return res
-          .status(400)
-          .json({ message: "Esse cpf já está cadastrado" });
+        return res.status(400).json({ message: "Esse cpf já está cadastrado" });
     } else if (requestType == "update") {
       const { id } = req.params;
 
@@ -138,36 +136,42 @@ const verifyCPF = (requestType) => async (req, res, next) => {
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
-}
+};
 
 const verifyAllProductsId = async (req, res, next) => {
   const { pedido_produtos } = req.body;
 
-  if (!pedido_produtos || pedido_produtos.length < 1) return res.status(400).json({ message: "Pedido inválido." });
+  if (!pedido_produtos || pedido_produtos.length < 1)
+    return res.status(400).json({ message: "Pedido inválido." });
 
   const errors = [];
 
   try {
-
     await Promise.all(
       pedido_produtos.map(async (product) => {
-        const dbProduct = await knex("produtos").where({ id: product.produto_id });
+        const dbProduct = await knex("produtos").where({
+          id: product.produto_id,
+        });
 
         if (!dbProduct || dbProduct.length < 1) {
           errors.push(`Produto ${product.produto_id} não encontrado`);
-        } else if (dbProduct[0].quantidade_estoque < product.quantidade_produto) {
-          errors.push(`Estoque insuficiente do produto ${product.produto_id}. Quantidade disponível: ${dbProduct[0].quantidade_estoque}`);
+        } else if (
+          dbProduct[0].quantidade_estoque < product.quantidade_produto
+        ) {
+          errors.push(
+            `Estoque insuficiente do produto ${product.produto_id}. Quantidade disponível: ${dbProduct[0].quantidade_estoque}`
+          );
         }
       })
     );
 
-    if (errors.length > 0) return res.status(400).json({message: errors[0] });
+    if (errors.length > 0) return res.status(400).json({ message: errors[0] });
 
     next();
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
-}
+};
 
 module.exports = {
   verifyBodyRequest,
@@ -176,5 +180,5 @@ module.exports = {
   verifyProductDescription,
   verifyByIdAnyDataBase,
   verifyCPF,
-  verifyAllProductsId
+  verifyAllProductsId,
 };

@@ -1,7 +1,7 @@
 @url = http://localhost:3000
 
 ###
-GET {{url}}/categorias
+GET {{url}}/categoria
 
 ###
 POST {{url}}/usuario
@@ -94,3 +94,78 @@ Content-Type: application/json
     "valor":1000,
     "categoria_id": 4
 }
+
+
+###
+GET  {{url}}/pedido
+?cliente_id=2
+Authorization: Bearer {{token}}
+
+###
+# @name clientID
+POST  {{url}}/cliente
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "nome":"Maria joaquina",
+    "email":"maria@teste.com",
+    "cpf":"23267892300"
+}
+
+###
+# @name clientID
+POST  {{url}}/cliente
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "nome":"Quero ver o cep",
+    "email":"email@teste2.com",
+    "cpf":"03267892330",
+    "cep":"80050350"
+}
+
+###
+@clientID = {{clientID.response.body.id}}
+
+###
+PUT  {{url}}/cliente/2
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "nome":"Quero ver o cep",
+    "email":"govel43146@weirby.com",
+    "cpf":"03267892300",
+    "cep":"80050350",
+    "numero":"80"
+}
+
+###
+GET  {{url}}/cliente/2
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+###
+GET  {{url}}/cliente/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+
+###
+POST  {{url}}/pedido/
+Authorization: Bearer {{token}}
+Content-Type: application/json 
+
+{
+    "cliente_id":5,
+    "pedido_produtos":[
+        {"produto_id":1,
+        "pedido_produtos[0].quantidade_produto":20
+        }
+    ]
+}
+
+
+
