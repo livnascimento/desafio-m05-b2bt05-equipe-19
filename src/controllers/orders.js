@@ -1,5 +1,6 @@
 const knex = require('../db/db-knex');
 const { processProducts } = require('../services/order');
+const { sendEmail } = require('../services/sendEmail');
 
 const createOrder = async (req, res) => {
     const { cliente_id, observacao, pedido_produtos } = req.body;
@@ -10,7 +11,6 @@ const createOrder = async (req, res) => {
         const formatProduct = async (order) => {
             const product = await knex('produtos').where({ id: order.produto_id }).first();
             valor_total += product.valor * order.quantidade_produto;
-
 
             await knex('produtos')
                 .where({ id: order.produto_id })
@@ -27,6 +27,8 @@ const createOrder = async (req, res) => {
         const order = await knex("pedidos").returning("*").insert({ cliente_id, observacao, valor_total });
 
         await processProducts(formatedProducts, order);
+
+        await sendEmail(cliente_id);
 
         return res.status(201).json({ order });
     } catch (error) {
