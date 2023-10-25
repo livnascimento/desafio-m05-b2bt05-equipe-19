@@ -1,10 +1,10 @@
-const express = require('express');
-const loginRoutes = require('./login');
-const productRoutes = require('./products');
-const userRoutes = require('./users');
-const clientRoutes = require('./clients');
-const categoryRoutes = require('./categories');
-const ordersRoutes = require('./orders');
+const express = require("express");
+const loginRoutes = require("./login");
+const productRoutes = require("./products");
+const userRoutes = require("./users");
+const clientRoutes = require("./clients");
+const categoryRoutes = require("./categories");
+const ordersRoutes = require("./orders");
 
 const routes = express();
 
