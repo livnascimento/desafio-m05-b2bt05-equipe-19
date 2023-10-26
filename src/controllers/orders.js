@@ -74,7 +74,7 @@ const listAllOrders = async (req, res) => {
 
           if (pedidosIndex !== pedido.pedido.id) {
             arrayFormatted.push(pedido);
-            pedidosIndex++;
+            pedidosIndex = pedido.pedido.id;
           }
 
           for (let itensArray of arrayFormatted) {
