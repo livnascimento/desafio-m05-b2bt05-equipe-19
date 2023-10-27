@@ -6,6 +6,5 @@ const multer = require('../multer')
 const uploadRoutes = express();
 
 uploadRoutes.post('/upload/:id', verifyByIdAnyDataBase('produtos'), multer.single('imagefile'), uploadImage);
-uploadRoutes.delete('/upload/:id', verifyByIdAnyDataBase('produtos'), deleteImage);
 
 module.exports = uploadRoutes;

@@ -18,6 +18,8 @@ const {
     detailProduct,
     deleteProduct,
 } = require("../controllers/products");
+const deleteImage = require("../middlewares/upload");
+
 
 const productRoutes = express();
 
@@ -41,6 +43,7 @@ productRoutes.get("/produto/:id", verifyByIdAnyDataBase("produtos"), detailProdu
 productRoutes.delete(
     "/produto/:id",
     verifyByIdAnyDataBase("produtos"),
+    deleteImage,
     deleteProduct
 );
 

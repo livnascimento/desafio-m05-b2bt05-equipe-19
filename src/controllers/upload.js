@@ -29,33 +29,11 @@ const uploadImage = async (req, res) => {
         return res.status(201).json(newImage);
 
     } catch (error) {
-        console.log(error.message);
-        return res.status(400).json({ mensagem: "Erro interno do servidor." });
+        return res.status(400).json({ message: "Erro interno do servidor." });
     }
 
-}
-
-const deleteImage = async (req, res) => {
-    const { id } = req.params;
-
-    const product = await knex('produtos').where({ id: Number(id) }).first();
-
-    try {
-
-        const path = product.produto_imagem.split(`${process.env.ENDPOINT}/`)[1];
-
-        await upload.deleteFile(path);
-
-        await knex('produtos').where({ id }).update({ produto_imagem: null });
-
-        return res.json({ mensagem: "Imagem deletada com sucesso" });
-    } catch (error) {
-        console.log(error);
-        return res.status(400).json({ mensagem: "Erro interno do servidor." });
-    }
 }
 
 module.exports = {
-    uploadImage,
-    deleteImage
+    uploadImage
 }

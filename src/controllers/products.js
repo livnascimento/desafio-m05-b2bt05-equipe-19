@@ -121,7 +121,8 @@ const deleteProduct = async (req, res) => {
         });
     }
     const product = await knex("produtos").where({ id }).delete();
-    return res.status(204).send();
+
+    return res.status(204).json();
   } catch (error) {
     return res.status(400).json({ message: "Erro interno do servidor." });
   }
